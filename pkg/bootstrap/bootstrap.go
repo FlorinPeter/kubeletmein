@@ -35,6 +35,7 @@ func Command() *cobra.Command {
 
 	cmd.AddCommand(bootstrapDoCmd(c))
 	cmd.AddCommand(bootstrapGkeCmd(c))
+	cmd.AddCommand(bootstrapOcpCmd(c))
 
 	cmd.PersistentFlags().StringVarP(&c.BootstrapConfig, "bootstrap-kubeconfig", "b", "bootstrap-kubeconfig", "The filename to write the bootstrap kubeconfig to")
 	cmd.PersistentFlags().StringVarP(&c.CaCertPath, "ca-cert", "a", "ca-certificates.crt", "The filename to write the apiserver CA cert to")

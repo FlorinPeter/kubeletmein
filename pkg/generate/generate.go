@@ -40,7 +40,7 @@ func Command() *cobra.Command {
 			}
 
 			logger.Info("got new cert and wrote kubeconfig")
-			logger.Info("now try: kubectl --kubeconfig %v get pods", config.KubeConfig)
+			logger.Info("now try: kubectl --kubeconfig %v get pods --all-namespaces", config.KubeConfig)
 
 			return err
 		},
