@@ -6,7 +6,8 @@ export CGO_ENABLED=0
 OSTYPE=${OSTYPE:-linux}
 if [[ ${OSTYPE:0:5} == linux ]]; then
     echo "build for linux"
-    export GOOS='darwin'
+    export GOOS='linux'
+    export GOARCH='amd64'
 
 elif [[ ${OSTYPE:0:6} == darwin ]]; then
     echo "build for mac"
