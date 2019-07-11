@@ -12,13 +12,16 @@ There's more info in our blog post at [https://www.4armed.com/blog/hacking-googl
 
 ## Supported providers
 
-### OCP4
-
-OCP4 is fully supported and relies on the MCO
-
 ### GKE
 
 GKE is fully supported and relies on the metadata concealmeant being disabled (the default setting).
+
+## Fixed providers
+
+OpenShift (OCP) was vulnerable in the preview releases of 4.1, but the official 4.1.0 release
+has multiple mitigations; the primary one is that the SDN layer [denies userdata access](https://github.com/openshift/origin/pull/22826).
+
+## Other providers
 
 ### EKS
 
